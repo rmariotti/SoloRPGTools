@@ -1,0 +1,59 @@
+.unconfined {
+    max-width: 100% !important;
+}
+
+table.charcter_sheet, .character_sheet tr, .character_sheet th, .character_sheet td {
+    vertical-align: top;
+    white-space: normal;
+}
+
+table.character_data, .character_data tr, .character_data th, .character_data td {
+    white-space: nowrap;
+}
+
+.concept td, .concept th {
+    white-space: pre-line;
+}
+
+td.character_pic_cell {
+    vertical-align: middle;
+}
+
+.character_pic_container img {
+    table-layout: fixed;
+    max-width: 100%;
+    height: auto;
+}
+
+.character_pic_container {
+    width: 150px;
+    float: left;
+}
+
+.tracker_icons img {
+    display: inline-block;
+    table-layout: fixed;
+    max-width: 100%;
+    height: auto;
+    white-space: nowrap;
+}
+
+.tracker_icons {
+    font-size: 0px;
+    width: 16px;
+    float: left;
+}
+
+table.traits, .traits th, .traits td, .traits tr {
+    vertical-align: top;
+    text-align: left;
+}
+
+.traits td {
+    text-align: right;
+}
+
+.edges_hindrances td, .edges_hindrances th {
+    width: 50%;
+}
+
