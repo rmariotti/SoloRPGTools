@@ -53,7 +53,7 @@ class GameManager:
 
     @staticmethod
     def build_character():
-        character_picture_path = "assets/player_character/character_picture.jpg"
+        character_picture_path = "{0}/assets/player_character/character_picture.jpg".format(assets_constants.ROOT_PATH)
 
         skill_list = [('Climbing', 'd6'), ('Driving', 'd6'), ('Fighting', 'd12'),
                       ('Gambling', 'd8'), ('Guts', 'd8'), ('Healing', 'd4'),

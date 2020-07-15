@@ -2,7 +2,7 @@
     max-width: 100% !important;
 }
 
-table.charcter_sheet, .character_sheet tr, .character_sheet th, .character_sheet td {
+table.character_sheet, .character_sheet tr, .character_sheet th, .character_sheet td {
     vertical-align: top;
     white-space: normal;
 }
@@ -26,8 +26,9 @@ td.character_pic_cell {
 }
 
 .character_pic_container {
-    width: 150px;
+    width: 175px;
     float: left;
+    object-fit: contain;
 }
 
 .tracker_icons img {
@@ -54,6 +55,6 @@ table.traits, .traits th, .traits td, .traits tr {
 }
 
 .edges_hindrances td, .edges_hindrances th {
+    vertical-align: top;
     width: 50%;
 }
-

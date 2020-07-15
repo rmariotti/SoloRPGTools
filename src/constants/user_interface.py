@@ -1,3 +1,5 @@
+from constants import assets as assets_constants
+
 # character sheet
 FIELD_NAME = "Name"
 FIELD_RACE = "Race"
@@ -15,8 +17,8 @@ FIELD_SMARTS = "Smarts"
 
 MAX_ROW_PER_COL = 5
 
-ICON_BENNY = 'assets/icons/benny.png'
-ICON_WOUND = 'assets/icons/wound.png'
+ICON_BENNY = '{0}/assets/icons/benny.png'.format(assets_constants.ROOT_PATH)
+ICON_WOUND = '{0}/assets/icons/wound.png'.format(assets_constants.ROOT_PATH)
 
 # quest manager
 QUEST_COLUMN_LAYOUT = ["Name", "Description", "Challenge"]

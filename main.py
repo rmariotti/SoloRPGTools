@@ -1,5 +1,6 @@
 from src.game import game_manager
+from render import character as character_render
 
-game = game_manager.GameManager()
-
-game.show_character()
+def main():
+    game = game_manager.GameManager()
+    character_render.print(game.character)
