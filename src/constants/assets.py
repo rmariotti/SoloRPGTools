@@ -16,4 +16,4 @@ TABLE_FILES = ["event_focus.table",
 STYLES = ["{0}/character_sheet.css".format(STYLES_PATH)]
 TABLES = ["{0}/{1}".format(TABLES_PATH, table_file) for table_file in TABLE_FILES]
 
-D20_CHAR_TEMPLATE = "{0}/d20_character_sheet.html".format(TEMPLATES_PATH)
+D20_CHAR_TEMPLATE = "{0}/d20_character_sheet.mako".format(TEMPLATES_PATH)

@@ -17,8 +17,10 @@ FIELD_SMARTS = "Smarts"
 
 MAX_ROW_PER_COL = 5
 
-ICON_BENNY = '{0}/assets/icons/benny.png'.format(assets_constants.ROOT_PATH)
-ICON_WOUND = '{0}/assets/icons/wound.png'.format(assets_constants.ROOT_PATH)
+ICON_BENNY = '{0}/icons/benny.png'.format(assets_constants.ASSETS_PATH)
+ICON_WOUND = '{0}/icons/wound.png'.format(assets_constants.ASSETS_PATH)
+
+ICON_13THAGE_LOGO = '{0}/icons/13thage_logo.png'.format(assets_constants.ASSETS_PATH)
 
 # quest manager
 QUEST_COLUMN_LAYOUT = ["Name", "Description", "Challenge"]

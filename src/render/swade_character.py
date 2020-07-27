@@ -2,7 +2,6 @@ from IPython.display import display, HTML
 from constants import user_interface as ui_constants
 from base64 import b64encode
 
-
 def print(character):
     """
     Render the given SwadeCharacter object on a Jupyter Notebook.
