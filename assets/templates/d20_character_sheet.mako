@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 
 <link href="https://fonts.googleapis.com/css2?family=Fondamento&family=Open+Sans&display=swap" rel="stylesheet">
-<!-- TODO: - load styles from file -->
+<!--
+TODO:
+    - load styles from file
+    - use constants for character sheet headers
+-->
 <style>
     :root {
         --color-bg: #086375;
@@ -22,6 +26,8 @@
         width: 100%;
         display: inline-flex;
         float: left;
+
+        line-height: normal;
     }
 
     .column {
@@ -51,14 +57,13 @@
 
     .character_basic_info {
         display: block;
-        padding: 10px;
-        padding-top: 0;
+        padding: 0 10px 10px;
     }
 
     .character_sheet hr {
         border: 0 !important;
         border-top: 3px solid var(--color-details-fg) !important;
-        margin: 10px 0px !important;
+        margin: 10px 0 !important;
         clear:both !important;
         display:block !important;
     }
@@ -86,24 +91,23 @@
         left: 0;
         bottom: 0;
 
-        padding: 0;
-        padding-left: 10px;
+        padding: 0 0 0 10px;
 
         color: white;
         text-shadow: 1px 1px black;
     }
 
-    .logo-13thage {
+    .logo_13thage {
         position: absolute;
         top: 0;
         right: 0;
     }
 
-    .logo-13thage img {
+    .logo_13thage img {
         width: 32px;
         height: 32px;
 
-        border-radius: 2px;
+        border-radius: 0 0 0 2px;
     }
 
 
@@ -113,13 +117,14 @@
         position: relative;
     }
 
-    .ability_scores_container {
+    .ability_scores {
         float: left;
-        width: 16.66666667%;
         position: relative;
+        margin: 0 auto;
+        width: 16.66666667%;
     }
 
-    .ability_scores_container p, .ability_scores_container strong {
+    .ability_scores p, .ability_scores strong {
         text-align: center !important;
         text-transform: uppercase;
     }
@@ -158,6 +163,22 @@
     }
 </style>
 
+<%!
+    from templates_heper.images import embed_image
+    import constants.user_interface as ui_constants
+%>
+
+<!-- %namespace file="common.mako" import="embed_image"/-->
+
+<!-- check if the feat_list is not empty then print them in the right div -->
+<%def name="feats_block(feat_list)">
+% if feat_list:
+        % for feat in feat_list:
+            <p class="feat"><strong>${feat.type}:</strong> ${feat.description}</p>
+        % endfor
+% endif
+</%def>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -165,42 +186,45 @@
 </head>
 
 <body>
+
 <!-- the object we are going to represent is stored in the character var accessible trough ${character} -->
 <div class="character_sheet">
     <div class="left_column column">
 
         <div class="character_portrait_container">
 
-            <img src="https://db4sgowjqfwig.cloudfront.net/campaigns/81774/assets/335678/13th-Age-Character-Creation-Archmage.jpg?1402238890" style="width: 100%" alt="Character Portrait">
+            <img src="${embed_image(character.picture_path)}" style="width: 100%" alt="Character Portrait">
             <div class="display_bottomleft">
                 <h1>${character.name}</h1>
                 <p>Level ${character.level} ${character.race_name} ${character.class_name}, Pure Neutral</p>
             </div>
 
-            <div class="logo-13thage">
-                <img src="https://e7.pngegg.com/pngimages/122/578/png-clipart-13th-age-rpg-logo-role-playing-game-font-64000-text-logo.png" alt="13th Age Logo">
+            <div class="logo_13thage">
+                <img src="${embed_image(ui_constants.ICON_13THAGE_LOGO)}" alt="13th Age Logo">
             </div>
 
         </div>
 
         <div class="character_basic_info">
             <hr>
+
             <div>
-                <p><strong>Armor Class:</strong> ${character.ac}</p>
-                <p><strong>Physical Defence:</strong> ${character.pd}</p>
-                <p><strong>Mental Defence: </strong> ${character.md}</p>
-                <p><strong>Hit Points:</strong> ${character.hp} (${character.hp_max})</p>
-                <p><strong>Recoveries:</strong> ${character.recoveries}${character.recovery_die} (${character.recoveries}${character.recovery_die})</p>
+                <p><strong>Armor Class: </strong>${character.ac}</p>
+                <p><strong>Physical Defence: </strong>${character.pd}</p>
+                <p><strong>Mental Defence: </strong>${character.md}</p>
+                <p><strong>Hit Points: </strong>${character.hp} (${character.hp_max})</p>
+                <p><strong>Recoveries: </strong>
+                    ${character.recoveries}${character.recovery_die} (${character.recoveries}${character.recovery_die})
+                </p>
             </div>
+
             <hr>
 
             % for ability_score in character.ability_scores:
-            <div class="ability_scores_container">
-
+            <div class="ability_scores">
                 <p><strong>${ability_score.name[:3]}</strong></p>
                 <p>${ability_score.value} (${"{0:+}".format(ability_score.get_modifier())})</p>
                 <p>${"{0:+}".format(ability_score.get_modifier() + character.level)}</p>
-
             </div>
             % endfor
 
@@ -209,7 +233,19 @@
             <div>
                 <p>
                     <strong>Backgrounds:</strong>
-                    <i>Archmage of Horizon</i> +5, <i>World Builder</i> +3
+                    <!--
+                    index is needed to check if the background is
+                    the last in the tuple, so we can append a commas
+                    to values that are not the last
+                    -->
+                    % for background, index in zip(character.backgrounds, range(len(character.backgrounds))):
+                    <i>${background.name}</i>
+                        % if index != len(character.backgrounds)-1:
+                            ${" {0:+},".format(background.value)}
+                        % else:
+                            ${" {0:+}".format(background.value)}
+                        % endif
+                    % endfor
                 </p>
             </div>
 
@@ -217,61 +253,71 @@
 
             <div class="textbox">
                 <p><strong>One Unique Thing</strong></p>
-                <p>Nimdhel ha scoperto che tutto è riconducibile ad un linguaggio. Anche l'universo stesso non è che l'espressione di un linguaggio, bisogna solo essere creativi capire qual è il mezzo di comunicazione e cercare di comprendere il suo alfabeto. La sua teoria è solo una bozza, ma a volte funziona e Nimdhel riesce a leggere il linguaggio dell'universo.</p>
+                <p>${character.out}</p>
             </div>
 
         </div>
-
     </div>
+
     <div class="right_column column">
         <div class="right_column_left_container">
+
+            % if character.racial_power:
             <div class="race_powers">
                 <h2>Racial Powers</h2>
+
                 <div class="textbox">
-                    <strong>Highblood Teleport</strong>
-                    <p>Once per battle as a move action, place yourself in a nearby location you can see.</p>
-                    <p class="feat"><strong>Champion feat:</strong> Deal damage equal to twice your level to one enemy engaged with you before or after you teleport.</p>
+                    <strong>${character.racial_power.name}</strong>
+                    <p>${character.racial_power.description}</p>
+                    ${feats_block(character.racial_power.feats)}
                 </div>
             </div>
-
             <hr>
+            % endif
 
+            % if character.class_features:
             <div class="features">
                 <h2>Class Features</h2>
+
+                % for class_feature in character.class_features:
                 <div class="textbox">
-                    <strong>Trucchetti (5/battaglia)</strong>
-                    <p>Lancia incantesimi minori a volontà.</p>
-                </div>
+                    <strong>${class_feature.name}</strong>
+                    <p>${class_feature.description}</p>
+                    ${feats_block(class_feature.feats)}
+                </div><br>
+                % endfor
             </div>
-
             <hr>
+            % endif
 
+            % if character.class_talents:
             <div class="talents">
                 <h2>Class Talents</h2>
+
+                % for class_talent in character.class_talents:
                 <div class="textbox">
-                    <strong>Trucchetti (5/battaglia)</strong>
-                    <p>Lancia incantesimi minori a volontà.</p>
-                </div>
+                    <strong>${class_talent.name}</strong>
+                    <p>${class_talent.description}</p>
+                    ${feats_block(class_talent.feats)}
+                </div><br>
+                % endfor
+
             </div>
+            % endif
         </div>
+
         <div class="right_column_right_container">
 
+            % if character.icon_relationships:
             <div class="icons_relationships">
                 <h2>Icon Relationships</h2>
-                <p>
-                    <strong>Litch King:</strong> negative
-                </p>
-                <p>
-                    <strong>Emperor:</strong> positive
-                </p>
-                <p>
-                    <strong>Priestess:</strong> conflicted
-                </p>
-
+                % for icon_relationship in character.icon_relationships:
+                <p><strong>${icon_relationship.name}: </strong>${icon_relationship.type}</p>
+                % endfor
             </div>
+            % endif
 
         </div>
-
     </div>
 </div>
 </body>
