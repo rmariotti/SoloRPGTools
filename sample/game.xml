@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<game_config>
+
+    <characters>
+        <character_sheet_path>character sheet 1 path</character_sheet_path>
+        <character_sheet_path>character sheet 2 path</character_sheet_path>
+    </characters>
+
+    <dice>
+        <seed>999</seed>
+    </dice>
+
+    <quests>
+        <quests_path>quest save file path</quests_path>
+    </quests>
+
+</game_config>

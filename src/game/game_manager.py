@@ -14,10 +14,38 @@ class GameManager:
     def __init__(self):
         self.dice_roller = dice_roller.DiceRoller(game_constants.RANDOM_SEED)
         self.quest_manager = quest_manager.QuestManager()
+
+        # cards
         self.french_deck = self.build_french_deck()
+
+        self.gma_aos_deck = build_unranked_deck(
+            assets_constants.GMA_AGE_OF_SAIL_DECK_NAME,
+            assets_constants.GMA_AGE_OF_SAIL_DECK_SIZE,
+            assets_constants.GMA_AGE_OF_SAIL_DECK_PATH,
+            assets_constants.GMA_AGE_OF_SAIL_FILENAME,
+            assets_constants.GMA_AGE_OF_SAIL_EXTENSION)
+
+        self.gma_base_deck = build_unranked_deck(
+            assets_constants.GMA_BASE_DECK_NAME,
+            assets_constants.GMA_BASE_DECK_SIZE,
+            assets_constants.GMA_BASE_DECK_PATH,
+            assets_constants.GMA_BASE_FILENAME,
+            assets_constants.GMA_BASE_EXTENSION)
+
+        self.gma_fantasy_deck = build_unranked_deck(
+            assets_constants.GMA_FANTASY_DECK_NAME,
+            assets_constants.GMA_FANTASY_DECK_SIZE,
+            assets_constants.GMA_FANTASY_DECK_PATH,
+            assets_constants.GMA_FANTASY_FILENAME,
+            assets_constants.GMA_FANTASY_EXTENSION)
+
+        # tables
         self.tables = self.build_tables()
+
+        # characters
         self.character = self.build_character()
 
+        # CSS styles
         self.set_styles()
 
     @staticmethod
@@ -30,7 +58,7 @@ class GameManager:
         pictures = []
         for suit in suits.values():
             for rank in ranks.values():
-                pictures.append("{0}/{1}_of_{2}.png".format(assets_constants.CARD_PICTURE_PATH,
+                pictures.append("{0}/{1}_of_{2}.png".format(assets_constants.FRENCH_DECK_PATH,
                                                             rank.lower(), suit.lower()))
 
         return deck.Deck(suits, ranks, pictures)
@@ -53,6 +81,10 @@ class GameManager:
 
     @staticmethod
     def build_character():
+        """
+        TODO: - remove this method
+        :return:
+        """
         character_picture_path = "{0}/assets/player_character/character_picture.jpg".format(assets_constants.ROOT_PATH)
 
         skill_list = [('Climbing', 'd6'), ('Driving', 'd6'), ('Fighting', 'd12'),
@@ -117,5 +149,20 @@ class GameManager:
 
         return character
 
-    def show_character(self):
-        self.character.show()
+
+def build_unranked_deck(deck_name, deck_size, deck_pictures_path,
+                        deck_pictures_filename, deck_pictures_extension):
+    suits = {1: "{0}".format(deck_name)}
+    ranks = {}
+
+    # TODO: - There is probably a better way to do this
+    for i in range(1, deck_size):
+        ranks[i] = "{0} GMA card".format(i)
+
+    pictures = []
+    for suit in suits.values():
+        for rank in ranks.keys():
+            pictures.append("{0}/{1}{2}{3}".format(deck_pictures_path, deck_pictures_filename,
+                                                   rank, deck_pictures_extension))
+
+    return deck.Deck(suits, ranks, pictures)

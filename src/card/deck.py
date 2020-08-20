@@ -106,7 +106,7 @@ class Card:
 
 
 def show_images_horizontally(list_of_files):
-    fig = figure()
+    fig = figure(num=None, figsize=(8, 6), dpi=200)
     number_of_files = len(list_of_files)
 
     for i in range(number_of_files):

@@ -26,7 +26,7 @@ setuptools.setup(
     entry_points={
         'console_scripts': ['solorpgtools=cmd_scripts.new_game:main'],
     },
-    cmd_class={
+    cmdclass={
         'clean': CleanCommand,
     }
 )

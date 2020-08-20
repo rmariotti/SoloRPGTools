@@ -164,11 +164,11 @@ TODO:
 </style>
 
 <%!
-    from templates_heper.images import embed_image
+    from templates_helper.images import embed_image
     import constants.user_interface as ui_constants
 %>
 
-<!-- %namespace file="common.mako" import="embed_image"/-->
+
 
 <!-- check if the feat_list is not empty then print them in the right div -->
 <%def name="feats_block(feat_list)">
@@ -307,6 +307,22 @@ TODO:
         </div>
 
         <div class="right_column_right_container">
+
+            % if character.powers_and_spells:
+            <div class="features">
+                <h2>Class Features</h2>
+
+                % for power in character.powers_and_spells:
+                <div class="textbox">
+                    <strong>${power.name}</strong>
+                    <p>${power.description}</p>
+                    ${feats_block(power.feats)}
+                </div><br>
+                % endfor
+            </div>
+            <hr>
+            % endif
+
 
             % if character.icon_relationships:
             <div class="icons_relationships">

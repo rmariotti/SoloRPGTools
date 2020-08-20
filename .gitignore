@@ -3,3 +3,7 @@
 /venv/
 /build/
 /SoloRPGTools.egg-info/
+/sample/.ipynb_checkpoints/
+/assets/cards/gma_age_of_sail/
+/assets/cards/gma_base/
+/assets/cards/gma_fantasy/
